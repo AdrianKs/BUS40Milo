@@ -13,9 +13,6 @@
 
 package org.eclipse.milo.examples.client;
 
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-
 import com.google.common.collect.ImmutableList;
 import org.eclipse.milo.opcua.sdk.client.OpcUaClient;
 import org.eclipse.milo.opcua.stack.core.types.builtin.DataValue;
@@ -25,10 +22,13 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.Variant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class WriteExample implements ClientExample {
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
+public class WriteExampleMovement implements ClientExample {
 
     public static void main(String[] args) throws Exception {
-        WriteExample example = new WriteExample();
+        WriteExampleMovement example = new WriteExampleMovement();
 
         new ClientExampleRunner(example).run();
     }
@@ -40,7 +40,7 @@ public class WriteExample implements ClientExample {
         // synchronous connect
         client.connect().get();
 
-        List<NodeId> nodeIds = ImmutableList.of(new NodeId(2, "StorageSystem/weightSensors/Weight"));
+        List<NodeId> nodeIds = ImmutableList.of(new NodeId(2, "StorageSystem/movementSensor/MovementCount"));
 
         for (int i = 0; i < 10; i++) {
             Variant v = new Variant(i);
