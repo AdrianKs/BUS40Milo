@@ -27,6 +27,7 @@ public class Identifiers {
     public static final NodeId Int16 = init(4);
     public static final NodeId UInt16 = init(5);
     public static final NodeId Weight = init(6);
+    public static final NodeId MovementCount = init(6);
     public static final NodeId UInt32 = init(7);
     public static final NodeId Int64 = init(8);
     public static final NodeId UInt64 = init(9);

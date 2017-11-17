@@ -78,6 +78,7 @@ public class ExampleNamespace implements Namespace {
         {"SByte", Identifiers.SByte, new Variant((byte) 0x00)},
         {"Int16", Identifiers.Int16, new Variant((short) 16)},
         {"Weight", Identifiers.Weight, new Variant(32)},
+        {"MovementCount", Identifiers.MovementCount, new Variant(32)},
         {"Int64", Identifiers.Int64, new Variant(64L)},
         {"UInt16", Identifiers.UInt16, new Variant(ushort(16))},
         {"UWeight", Identifiers.UInt32, new Variant(uint(32))},
@@ -312,8 +313,8 @@ public class ExampleNamespace implements Namespace {
 
         // movementSensor Weight
         {
-            String name = "Weight";
-            NodeId typeId = Identifiers.Weight;
+            String name = "MovementCount";
+            NodeId typeId = Identifiers.MovementCount;
             Variant variant = new Variant(0);
 
             UaVariableNode node = new UaVariableNode.UaVariableNodeBuilder(server.getNodeMap())

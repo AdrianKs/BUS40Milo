@@ -40,7 +40,7 @@ public class WriteExample implements ClientExample {
         // synchronous connect
         client.connect().get();
 
-        List<NodeId> nodeIds = ImmutableList.of(new NodeId(2, "StorageSystem/weightSensors/weight"));
+        List<NodeId> nodeIds = ImmutableList.of(new NodeId(2, "StorageSystem/weightSensors/Weight"));
 
         for (int i = 0; i < 10; i++) {
             Variant v = new Variant(i);
