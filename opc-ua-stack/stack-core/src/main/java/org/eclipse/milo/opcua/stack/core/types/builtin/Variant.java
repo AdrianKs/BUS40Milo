@@ -60,7 +60,7 @@ public final class Variant {
         if (value instanceof UaStructure) {
             return Optional.of(((UaStructure) value).getTypeId());
         } else if (value instanceof UaEnumeration) {
-            return Optional.of(Identifiers.Int32);
+            return Optional.of(Identifiers.Weight);
         } else {
             Class<?> clazz = value.getClass().isArray() ?
                 ArrayUtil.getType(value) : value.getClass();
