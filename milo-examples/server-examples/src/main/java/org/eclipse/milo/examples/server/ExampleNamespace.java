@@ -54,7 +54,6 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.QualifiedName;
 import org.eclipse.milo.opcua.stack.core.types.builtin.StatusCode;
 import org.eclipse.milo.opcua.stack.core.types.builtin.Variant;
 import org.eclipse.milo.opcua.stack.core.types.builtin.XmlElement;
-import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UShort;
 import org.eclipse.milo.opcua.stack.core.types.enumerated.NodeClass;
 import org.eclipse.milo.opcua.stack.core.types.enumerated.TimestampsToReturn;
@@ -160,7 +159,7 @@ public class ExampleNamespace implements Namespace {
         addScalarNodes(rootNode);
         addAdminReadableNodes(rootNode);
         addAdminWritableNodes(rootNode);
-        addDynamicNodes(rootNode);
+        addmovementSensorNodes(rootNode);
     }
 
     private void addArrayNodes(UaFolderNode rootNode) {
@@ -280,25 +279,25 @@ public class ExampleNamespace implements Namespace {
         adminFolder.addOrganizes(node);
     }
 
-    private void addDynamicNodes(UaFolderNode rootNode) {
-        UaFolderNode dynamicFolder = new UaFolderNode(
+    private void addmovementSensorNodes(UaFolderNode rootNode) {
+        UaFolderNode movementSensorFolder = new UaFolderNode(
             server.getNodeMap(),
-            new NodeId(namespaceIndex, "StorageSystem/Dynamic"),
-            new QualifiedName(namespaceIndex, "Dynamic"),
-            LocalizedText.english("Dynamic")
+            new NodeId(namespaceIndex, "StorageSystem/movementSensor"),
+            new QualifiedName(namespaceIndex, "movementSensor"),
+            LocalizedText.english("movementSensor")
         );
 
-        server.getNodeMap().addNode(dynamicFolder);
-        rootNode.addOrganizes(dynamicFolder);
+        server.getNodeMap().addNode(movementSensorFolder);
+        rootNode.addOrganizes(movementSensorFolder);
 
-        // Dynamic Boolean
+        // movementSensor Boolean
         {
             String name = "Boolean";
             NodeId typeId = Identifiers.Boolean;
             Variant variant = new Variant(false);
 
             UaVariableNode node = new UaVariableNode.UaVariableNodeBuilder(server.getNodeMap())
-                .setNodeId(new NodeId(namespaceIndex, "StorageSystem/Dynamic/" + name))
+                .setNodeId(new NodeId(namespaceIndex, "StorageSystem/movementSensor/" + name))
                 .setAccessLevel(ubyte(AccessLevel.getMask(AccessLevel.READ_WRITE)))
                 .setBrowseName(new QualifiedName(namespaceIndex, name))
                 .setDisplayName(LocalizedText.english(name))
@@ -321,17 +320,17 @@ public class ExampleNamespace implements Namespace {
             node.setAttributeDelegate(delegate);
 
             server.getNodeMap().addNode(node);
-            dynamicFolder.addOrganizes(node);
+            movementSensorFolder.addOrganizes(node);
         }
 
-        // Dynamic Weight
+        // movementSensor Weight
         {
             String name = "Weight";
             NodeId typeId = Identifiers.Weight;
             Variant variant = new Variant(0);
 
             UaVariableNode node = new UaVariableNode.UaVariableNodeBuilder(server.getNodeMap())
-                .setNodeId(new NodeId(namespaceIndex, "StorageSystem/Dynamic/" + name))
+                .setNodeId(new NodeId(namespaceIndex, "StorageSystem/movementSensor/" + name))
                 .setAccessLevel(ubyte(AccessLevel.getMask(AccessLevel.READ_WRITE)))
                 .setBrowseName(new QualifiedName(namespaceIndex, name))
                 .setDisplayName(LocalizedText.english(name))
@@ -354,17 +353,17 @@ public class ExampleNamespace implements Namespace {
             node.setAttributeDelegate(delegate);
 
             server.getNodeMap().addNode(node);
-            dynamicFolder.addOrganizes(node);
+            movementSensorFolder.addOrganizes(node);
         }
 
-        // Dynamic Double
+        // movementSensor Double
         {
             String name = "Double";
             NodeId typeId = Identifiers.Double;
             Variant variant = new Variant(0.0);
 
             UaVariableNode node = new UaVariableNode.UaVariableNodeBuilder(server.getNodeMap())
-                .setNodeId(new NodeId(namespaceIndex, "StorageSystem/Dynamic/" + name))
+                .setNodeId(new NodeId(namespaceIndex, "StorageSystem/movementSensor/" + name))
                 .setAccessLevel(ubyte(AccessLevel.getMask(AccessLevel.READ_WRITE)))
                 .setBrowseName(new QualifiedName(namespaceIndex, name))
                 .setDisplayName(LocalizedText.english(name))
@@ -387,7 +386,7 @@ public class ExampleNamespace implements Namespace {
             node.setAttributeDelegate(delegate);
 
             server.getNodeMap().addNode(node);
-            dynamicFolder.addOrganizes(node);
+            movementSensorFolder.addOrganizes(node);
         }
     }
 
