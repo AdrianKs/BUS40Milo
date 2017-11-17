@@ -137,14 +137,14 @@ public class ExampleNamespace implements Namespace {
         subscriptionModel = new SubscriptionModel(server, this);
 
         try {
-            // Create a "HelloWorld" folder and add it to the node manager
-            NodeId folderNodeId = new NodeId(namespaceIndex, "HelloWorld");
+            // Create a "StorageSystem" folder and add it to the node manager
+            NodeId folderNodeId = new NodeId(namespaceIndex, "StorageSystem");
 
             UaFolderNode folderNode = new UaFolderNode(
                 server.getNodeMap(),
                 folderNodeId,
-                new QualifiedName(namespaceIndex, "HelloWorld"),
-                LocalizedText.english("HelloWorld")
+                new QualifiedName(namespaceIndex, "StorageSystem"),
+                LocalizedText.english("StorageSystem")
             );
 
             server.getNodeMap().addNode(folderNode);
@@ -188,7 +188,7 @@ public class ExampleNamespace implements Namespace {
     private void addArrayNodes(UaFolderNode rootNode) {
         UaFolderNode arrayTypesFolder = new UaFolderNode(
             server.getNodeMap(),
-            new NodeId(namespaceIndex, "HelloWorld/ArrayTypes"),
+            new NodeId(namespaceIndex, "StorageSystem/ArrayTypes"),
             new QualifiedName(namespaceIndex, "ArrayTypes"),
             LocalizedText.english("ArrayTypes")
         );
@@ -207,7 +207,7 @@ public class ExampleNamespace implements Namespace {
             Variant variant = new Variant(array);
 
             UaVariableNode node = new UaVariableNode.UaVariableNodeBuilder(server.getNodeMap())
-                .setNodeId(new NodeId(namespaceIndex, "HelloWorld/ArrayTypes/" + name))
+                .setNodeId(new NodeId(namespaceIndex, "StorageSystem/ArrayTypes/" + name))
                 .setAccessLevel(ubyte(AccessLevel.getMask(AccessLevel.READ_WRITE)))
                 .setUserAccessLevel(ubyte(AccessLevel.getMask(AccessLevel.READ_WRITE)))
                 .setBrowseName(new QualifiedName(namespaceIndex, name))
@@ -228,15 +228,15 @@ public class ExampleNamespace implements Namespace {
     }
 
     private void addScalarNodes(UaFolderNode rootNode) {
-        UaFolderNode scalarTypesFolder = new UaFolderNode(
+        UaFolderNode weightSensorsFolder = new UaFolderNode(
             server.getNodeMap(),
-            new NodeId(namespaceIndex, "HelloWorld/ScalarTypes"),
-            new QualifiedName(namespaceIndex, "ScalarTypes"),
-            LocalizedText.english("ScalarTypes")
+            new NodeId(namespaceIndex, "StorageSystem/weightSensors"),
+            new QualifiedName(namespaceIndex, "weightSensors"),
+            LocalizedText.english("weightSensors")
         );
 
-        server.getNodeMap().addNode(scalarTypesFolder);
-        rootNode.addOrganizes(scalarTypesFolder);
+        server.getNodeMap().addNode(weightSensorsFolder);
+        rootNode.addOrganizes(weightSensorsFolder);
 
         for (Object[] os : STATIC_SCALAR_NODES) {
             String name = (String) os[0];
@@ -244,7 +244,7 @@ public class ExampleNamespace implements Namespace {
             Variant variant = (Variant) os[2];
 
             UaVariableNode node = new UaVariableNode.UaVariableNodeBuilder(server.getNodeMap())
-                .setNodeId(new NodeId(namespaceIndex, "HelloWorld/ScalarTypes/" + name))
+                .setNodeId(new NodeId(namespaceIndex, "StorageSystem/weightSensors/" + name))
                 .setAccessLevel(ubyte(AccessLevel.getMask(AccessLevel.READ_WRITE)))
                 .setUserAccessLevel(ubyte(AccessLevel.getMask(AccessLevel.READ_WRITE)))
                 .setBrowseName(new QualifiedName(namespaceIndex, name))
@@ -258,14 +258,14 @@ public class ExampleNamespace implements Namespace {
             node.setAttributeDelegate(new ValueLoggingDelegate());
 
             server.getNodeMap().addNode(node);
-            scalarTypesFolder.addOrganizes(node);
+            weightSensorsFolder.addOrganizes(node);
         }
     }
 
     private void addAdminReadableNodes(UaFolderNode rootNode) {
         UaFolderNode adminFolder = new UaFolderNode(
             server.getNodeMap(),
-            new NodeId(namespaceIndex, "HelloWorld/OnlyAdminCanRead"),
+            new NodeId(namespaceIndex, "StorageSystem/OnlyAdminCanRead"),
             new QualifiedName(namespaceIndex, "OnlyAdminCanRead"),
             LocalizedText.english("OnlyAdminCanRead")
         );
@@ -275,7 +275,7 @@ public class ExampleNamespace implements Namespace {
 
         String name = "String";
         UaVariableNode node = new UaVariableNode.UaVariableNodeBuilder(server.getNodeMap())
-            .setNodeId(new NodeId(namespaceIndex, "HelloWorld/OnlyAdminCanRead/" + name))
+            .setNodeId(new NodeId(namespaceIndex, "StorageSystem/OnlyAdminCanRead/" + name))
             .setAccessLevel(ubyte(AccessLevel.getMask(AccessLevel.READ_WRITE)))
             .setBrowseName(new QualifiedName(namespaceIndex, name))
             .setDisplayName(LocalizedText.english(name))
@@ -300,7 +300,7 @@ public class ExampleNamespace implements Namespace {
     private void addAdminWritableNodes(UaFolderNode rootNode) {
         UaFolderNode adminFolder = new UaFolderNode(
             server.getNodeMap(),
-            new NodeId(namespaceIndex, "HelloWorld/OnlyAdminCanWrite"),
+            new NodeId(namespaceIndex, "StorageSystem/OnlyAdminCanWrite"),
             new QualifiedName(namespaceIndex, "OnlyAdminCanWrite"),
             LocalizedText.english("OnlyAdminCanWrite")
         );
@@ -310,7 +310,7 @@ public class ExampleNamespace implements Namespace {
 
         String name = "String";
         UaVariableNode node = new UaVariableNode.UaVariableNodeBuilder(server.getNodeMap())
-            .setNodeId(new NodeId(namespaceIndex, "HelloWorld/OnlyAdminCanWrite/" + name))
+            .setNodeId(new NodeId(namespaceIndex, "StorageSystem/OnlyAdminCanWrite/" + name))
             .setAccessLevel(ubyte(AccessLevel.getMask(AccessLevel.READ_WRITE)))
             .setBrowseName(new QualifiedName(namespaceIndex, name))
             .setDisplayName(LocalizedText.english(name))
@@ -335,7 +335,7 @@ public class ExampleNamespace implements Namespace {
     private void addDynamicNodes(UaFolderNode rootNode) {
         UaFolderNode dynamicFolder = new UaFolderNode(
             server.getNodeMap(),
-            new NodeId(namespaceIndex, "HelloWorld/Dynamic"),
+            new NodeId(namespaceIndex, "StorageSystem/Dynamic"),
             new QualifiedName(namespaceIndex, "Dynamic"),
             LocalizedText.english("Dynamic")
         );
@@ -350,7 +350,7 @@ public class ExampleNamespace implements Namespace {
             Variant variant = new Variant(false);
 
             UaVariableNode node = new UaVariableNode.UaVariableNodeBuilder(server.getNodeMap())
-                .setNodeId(new NodeId(namespaceIndex, "HelloWorld/Dynamic/" + name))
+                .setNodeId(new NodeId(namespaceIndex, "StorageSystem/Dynamic/" + name))
                 .setAccessLevel(ubyte(AccessLevel.getMask(AccessLevel.READ_WRITE)))
                 .setBrowseName(new QualifiedName(namespaceIndex, name))
                 .setDisplayName(LocalizedText.english(name))
@@ -383,7 +383,7 @@ public class ExampleNamespace implements Namespace {
             Variant variant = new Variant(0);
 
             UaVariableNode node = new UaVariableNode.UaVariableNodeBuilder(server.getNodeMap())
-                .setNodeId(new NodeId(namespaceIndex, "HelloWorld/Dynamic/" + name))
+                .setNodeId(new NodeId(namespaceIndex, "StorageSystem/Dynamic/" + name))
                 .setAccessLevel(ubyte(AccessLevel.getMask(AccessLevel.READ_WRITE)))
                 .setBrowseName(new QualifiedName(namespaceIndex, name))
                 .setDisplayName(LocalizedText.english(name))
@@ -416,7 +416,7 @@ public class ExampleNamespace implements Namespace {
             Variant variant = new Variant(0.0);
 
             UaVariableNode node = new UaVariableNode.UaVariableNodeBuilder(server.getNodeMap())
-                .setNodeId(new NodeId(namespaceIndex, "HelloWorld/Dynamic/" + name))
+                .setNodeId(new NodeId(namespaceIndex, "StorageSystem/Dynamic/" + name))
                 .setAccessLevel(ubyte(AccessLevel.getMask(AccessLevel.READ_WRITE)))
                 .setBrowseName(new QualifiedName(namespaceIndex, name))
                 .setDisplayName(LocalizedText.english(name))
@@ -445,7 +445,7 @@ public class ExampleNamespace implements Namespace {
 
     private void addMethodNode(UaFolderNode folderNode) {
         UaMethodNode methodNode = UaMethodNode.builder(server.getNodeMap())
-            .setNodeId(new NodeId(namespaceIndex, "HelloWorld/sqrt(x)"))
+            .setNodeId(new NodeId(namespaceIndex, "StorageSystem/sqrt(x)"))
             .setBrowseName(new QualifiedName(namespaceIndex, "sqrt(x)"))
             .setDisplayName(new LocalizedText(null, "sqrt(x)"))
             .setDescription(
