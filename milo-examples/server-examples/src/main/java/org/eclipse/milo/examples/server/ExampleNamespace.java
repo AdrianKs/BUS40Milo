@@ -72,9 +72,12 @@ public class ExampleNamespace implements Namespace {
 
     public static final String NAMESPACE_URI = "urn:eclipse:milo:hello-world";
 
-    private static final Object[][] STATIC_SCALAR_NODES = new Object[][]{
-        {"Weight", Identifiers.Weight, new Variant(32)},
-        {"MovementCount", Identifiers.MovementCount, new Variant(32)}
+    private static final Object[][] STATIC_WEIGHT_NODES = new Object[][]{
+        {"Weight", Identifiers.Weight, new Variant(32)}
+    };
+
+    private static final Object[][] STATIC_MOVEMENT_NODES = new Object[][]{
+            {"MovementCount", Identifiers.MovementCount, new Variant(32)}
     };
 
 
@@ -135,30 +138,30 @@ public class ExampleNamespace implements Namespace {
     }
 
     private void addVariableNodes(UaFolderNode rootNode) {
-        addScalarNodes(rootNode);
+        addScalarNodes(rootNode, STATIC_WEIGHT_NODES, "weightSensor");
+        addScalarNodes(rootNode, STATIC_MOVEMENT_NODES, "movementSensor");
         addAdminReadableNodes(rootNode);
         addAdminWritableNodes(rootNode);
-        addmovementSensorNodes(rootNode);
     }
 
-    private void addScalarNodes(UaFolderNode rootNode) {
+    private void addScalarNodes(UaFolderNode rootNode, Object[][] scalarArray, String folderName) {
         UaFolderNode weightSensorsFolder = new UaFolderNode(
             server.getNodeMap(),
-            new NodeId(namespaceIndex, "StorageSystem/weightSensors"),
-            new QualifiedName(namespaceIndex, "weightSensors"),
-            LocalizedText.english("weightSensors")
+            new NodeId(namespaceIndex, "StorageSystem/"+folderName),
+            new QualifiedName(namespaceIndex, folderName),
+            LocalizedText.english(folderName)
         );
 
         server.getNodeMap().addNode(weightSensorsFolder);
         rootNode.addOrganizes(weightSensorsFolder);
 
-        for (Object[] os : STATIC_SCALAR_NODES) {
+        for (Object[] os : scalarArray) {
             String name = (String) os[0];
             NodeId typeId = (NodeId) os[1];
             Variant variant = (Variant) os[2];
 
             UaVariableNode node = new UaVariableNode.UaVariableNodeBuilder(server.getNodeMap())
-                .setNodeId(new NodeId(namespaceIndex, "StorageSystem/weightSensors/" + name))
+                .setNodeId(new NodeId(namespaceIndex, "StorageSystem/"+folderName+"/" + name))
                 .setAccessLevel(ubyte(AccessLevel.getMask(AccessLevel.READ_WRITE)))
                 .setUserAccessLevel(ubyte(AccessLevel.getMask(AccessLevel.READ_WRITE)))
                 .setBrowseName(new QualifiedName(namespaceIndex, name))
@@ -244,117 +247,6 @@ public class ExampleNamespace implements Namespace {
 
         server.getNodeMap().addNode(node);
         adminFolder.addOrganizes(node);
-    }
-
-    private void addmovementSensorNodes(UaFolderNode rootNode) {
-        UaFolderNode movementSensorFolder = new UaFolderNode(
-            server.getNodeMap(),
-            new NodeId(namespaceIndex, "StorageSystem/movementSensor"),
-            new QualifiedName(namespaceIndex, "movementSensor"),
-            LocalizedText.english("movementSensor")
-        );
-
-        server.getNodeMap().addNode(movementSensorFolder);
-        rootNode.addOrganizes(movementSensorFolder);
-
-        // movementSensor Boolean
-        {
-            String name = "Boolean";
-            NodeId typeId = Identifiers.Boolean;
-            Variant variant = new Variant(false);
-
-            UaVariableNode node = new UaVariableNode.UaVariableNodeBuilder(server.getNodeMap())
-                .setNodeId(new NodeId(namespaceIndex, "StorageSystem/movementSensor/" + name))
-                .setAccessLevel(ubyte(AccessLevel.getMask(AccessLevel.READ_WRITE)))
-                .setBrowseName(new QualifiedName(namespaceIndex, name))
-                .setDisplayName(LocalizedText.english(name))
-                .setDataType(typeId)
-                .setTypeDefinition(Identifiers.BaseDataVariableType)
-                .build();
-
-            node.setValue(new DataValue(variant));
-
-            AttributeDelegate delegate = AttributeDelegateChain.create(
-                new AttributeDelegate() {
-                    @Override
-                    public DataValue getValue(AttributeContext context, VariableNode node) throws UaException {
-                        return new DataValue(new Variant(random.nextBoolean()));
-                    }
-                },
-                ValueLoggingDelegate::new
-            );
-
-            node.setAttributeDelegate(delegate);
-
-            server.getNodeMap().addNode(node);
-            movementSensorFolder.addOrganizes(node);
-        }
-
-        // movementSensor Weight
-        {
-            String name = "MovementCount";
-            NodeId typeId = Identifiers.MovementCount;
-            Variant variant = new Variant(0);
-
-            UaVariableNode node = new UaVariableNode.UaVariableNodeBuilder(server.getNodeMap())
-                .setNodeId(new NodeId(namespaceIndex, "StorageSystem/movementSensor/" + name))
-                .setAccessLevel(ubyte(AccessLevel.getMask(AccessLevel.READ_WRITE)))
-                .setBrowseName(new QualifiedName(namespaceIndex, name))
-                .setDisplayName(LocalizedText.english(name))
-                .setDataType(typeId)
-                .setTypeDefinition(Identifiers.BaseDataVariableType)
-                .build();
-
-            node.setValue(new DataValue(variant));
-
-            AttributeDelegate delegate = AttributeDelegateChain.create(
-                new AttributeDelegate() {
-                    @Override
-                    public DataValue getValue(AttributeContext context, VariableNode node) throws UaException {
-                        return new DataValue(new Variant(random.nextInt()));
-                    }
-                },
-                ValueLoggingDelegate::new
-            );
-
-            node.setAttributeDelegate(delegate);
-
-            server.getNodeMap().addNode(node);
-            movementSensorFolder.addOrganizes(node);
-        }
-
-        // movementSensor Double
-        {
-            String name = "Double";
-            NodeId typeId = Identifiers.Double;
-            Variant variant = new Variant(0.0);
-
-            UaVariableNode node = new UaVariableNode.UaVariableNodeBuilder(server.getNodeMap())
-                .setNodeId(new NodeId(namespaceIndex, "StorageSystem/movementSensor/" + name))
-                .setAccessLevel(ubyte(AccessLevel.getMask(AccessLevel.READ_WRITE)))
-                .setBrowseName(new QualifiedName(namespaceIndex, name))
-                .setDisplayName(LocalizedText.english(name))
-                .setDataType(typeId)
-                .setTypeDefinition(Identifiers.BaseDataVariableType)
-                .build();
-
-            node.setValue(new DataValue(variant));
-
-            AttributeDelegate delegate = AttributeDelegateChain.create(
-                new AttributeDelegate() {
-                    @Override
-                    public DataValue getValue(AttributeContext context, VariableNode node) throws UaException {
-                        return new DataValue(new Variant(random.nextDouble()));
-                    }
-                },
-                ValueLoggingDelegate::new
-            );
-
-            node.setAttributeDelegate(delegate);
-
-            server.getNodeMap().addNode(node);
-            movementSensorFolder.addOrganizes(node);
-        }
     }
 
     private void addMethodNode(UaFolderNode folderNode) {
