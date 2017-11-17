@@ -155,23 +155,10 @@ public class ExampleNamespace implements Namespace {
     }
 
     private void addVariableNodes(UaFolderNode rootNode) {
-        addArrayNodes(rootNode);
         addScalarNodes(rootNode);
         addAdminReadableNodes(rootNode);
         addAdminWritableNodes(rootNode);
         addmovementSensorNodes(rootNode);
-    }
-
-    private void addArrayNodes(UaFolderNode rootNode) {
-        UaFolderNode arrayTypesFolder = new UaFolderNode(
-            server.getNodeMap(),
-            new NodeId(namespaceIndex, "StorageSystem/ArrayTypes"),
-            new QualifiedName(namespaceIndex, "ArrayTypes"),
-            LocalizedText.english("ArrayTypes")
-        );
-
-        server.getNodeMap().addNode(arrayTypesFolder);
-        rootNode.addOrganizes(arrayTypesFolder);
     }
 
     private void addScalarNodes(UaFolderNode rootNode) {
