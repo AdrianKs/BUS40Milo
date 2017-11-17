@@ -98,28 +98,6 @@ public class ExampleNamespace implements Namespace {
         {"UtcTime", Identifiers.UtcTime, new Variant(DateTime.now())},
     };
 
-    private static final Object[][] STATIC_ARRAY_NODES = new Object[][]{
-        {"BooleanArray", Identifiers.Boolean, false},
-        {"ByteArray", Identifiers.Byte, ubyte(0)},
-        {"SByteArray", Identifiers.SByte, (byte) 0x00},
-        {"Int16Array", Identifiers.Int16, (short) 16},
-        {"Int32Array", Identifiers.Int32, 32},
-        {"Int64Array", Identifiers.Int64, 64L},
-        {"UInt16Array", Identifiers.UInt16, ushort(16)},
-        {"UInt32Array", Identifiers.UInt32, uint(32)},
-        {"UInt64Array", Identifiers.UInt64, ulong(64L)},
-        {"FloatArray", Identifiers.Float, 3.14f},
-        {"DoubleArray", Identifiers.Double, 3.14d},
-        {"StringArray", Identifiers.String, "string value"},
-        {"DateTimeArray", Identifiers.DateTime, new Variant(DateTime.now())},
-        {"GuidArray", Identifiers.Guid, new Variant(UUID.randomUUID())},
-        {"ByteStringArray", Identifiers.ByteString, new Variant(new ByteString(new byte[]{0x01, 0x02, 0x03, 0x04}))},
-        {"XmlElementArray", Identifiers.XmlElement, new Variant(new XmlElement("<a>hello</a>"))},
-        {"LocalizedTextArray", Identifiers.LocalizedText, new Variant(LocalizedText.english("localized text"))},
-        {"QualifiedNameArray", Identifiers.QualifiedName, new Variant(new QualifiedName(1234, "defg"))},
-        {"NodeIdArray", Identifiers.NodeId, new Variant(new NodeId(1234, "abcd"))}
-    };
-
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -195,36 +173,6 @@ public class ExampleNamespace implements Namespace {
 
         server.getNodeMap().addNode(arrayTypesFolder);
         rootNode.addOrganizes(arrayTypesFolder);
-
-        for (Object[] os : STATIC_ARRAY_NODES) {
-            String name = (String) os[0];
-            NodeId typeId = (NodeId) os[1];
-            Object value = os[2];
-            Object array = Array.newInstance(value.getClass(), 4);
-            for (int i = 0; i < 4; i++) {
-                Array.set(array, i, value);
-            }
-            Variant variant = new Variant(array);
-
-            UaVariableNode node = new UaVariableNode.UaVariableNodeBuilder(server.getNodeMap())
-                .setNodeId(new NodeId(namespaceIndex, "StorageSystem/ArrayTypes/" + name))
-                .setAccessLevel(ubyte(AccessLevel.getMask(AccessLevel.READ_WRITE)))
-                .setUserAccessLevel(ubyte(AccessLevel.getMask(AccessLevel.READ_WRITE)))
-                .setBrowseName(new QualifiedName(namespaceIndex, name))
-                .setDisplayName(LocalizedText.english(name))
-                .setDataType(typeId)
-                .setTypeDefinition(Identifiers.BaseDataVariableType)
-                .setValueRank(ValueRank.OneDimension.getValue())
-                .setArrayDimensions(new UInteger[]{uint(0)})
-                .build();
-
-            node.setValue(new DataValue(variant));
-
-            node.setAttributeDelegate(new ValueLoggingDelegate());
-
-            server.getNodeMap().addNode(node);
-            arrayTypesFolder.addOrganizes(node);
-        }
     }
 
     private void addScalarNodes(UaFolderNode rootNode) {
