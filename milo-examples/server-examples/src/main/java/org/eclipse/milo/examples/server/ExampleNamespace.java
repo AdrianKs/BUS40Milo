@@ -78,10 +78,10 @@ public class ExampleNamespace implements Namespace {
         {"Byte", Identifiers.Byte, new Variant(ubyte(0x00))},
         {"SByte", Identifiers.SByte, new Variant((byte) 0x00)},
         {"Int16", Identifiers.Int16, new Variant((short) 16)},
-        {"Int32", Identifiers.Int32, new Variant(32)},
+        {"Weight", Identifiers.Weight, new Variant(32)},
         {"Int64", Identifiers.Int64, new Variant(64L)},
         {"UInt16", Identifiers.UInt16, new Variant(ushort(16))},
-        {"UInt32", Identifiers.UInt32, new Variant(uint(32))},
+        {"UWeight", Identifiers.UInt32, new Variant(uint(32))},
         {"UInt64", Identifiers.UInt64, new Variant(ulong(64L))},
         {"Float", Identifiers.Float, new Variant(3.14f)},
         {"Double", Identifiers.Double, new Variant(3.14d)},
@@ -324,10 +324,10 @@ public class ExampleNamespace implements Namespace {
             dynamicFolder.addOrganizes(node);
         }
 
-        // Dynamic Int32
+        // Dynamic Weight
         {
-            String name = "Int32";
-            NodeId typeId = Identifiers.Int32;
+            String name = "Weight";
+            NodeId typeId = Identifiers.Weight;
             Variant variant = new Variant(0);
 
             UaVariableNode node = new UaVariableNode.UaVariableNodeBuilder(server.getNodeMap())

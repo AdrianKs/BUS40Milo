@@ -179,7 +179,7 @@ public class VendorNamespace implements Namespace {
                 return new DataValue(new Variant(Runtime.getRuntime().availableProcessors()));
             }
         };
-        availableProcessors.setDataType(Identifiers.Int32);
+        availableProcessors.setDataType(Identifiers.Weight);
 
         vendorServerInfo.addComponent(availableProcessors);
     }
