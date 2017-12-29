@@ -54,7 +54,7 @@ public class ClientExampleRunner {
     private OpcUaClient createClient() throws Exception {
         SecurityPolicy securityPolicy = clientExample.getSecurityPolicy();
 
-        EndpointDescription[] endpoints = UaTcpStackClient.getEndpoints("opc.tcp://localhost:12686/example").get();
+        EndpointDescription[] endpoints = UaTcpStackClient.getEndpoints("opc.tcp://134.155.49.90:12686/example").get();
 
         EndpointDescription endpoint = Arrays.stream(endpoints)
             .filter(e -> e.getSecurityPolicyUri().equals(securityPolicy.getSecurityPolicyUri()))

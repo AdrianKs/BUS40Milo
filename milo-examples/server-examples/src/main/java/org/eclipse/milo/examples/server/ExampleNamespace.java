@@ -147,7 +147,7 @@ public class ExampleNamespace implements Namespace {
     private void addScalarNodes(UaFolderNode rootNode, Object[][] scalarArray, String folderName) {
         UaFolderNode weightSensorsFolder = new UaFolderNode(
             server.getNodeMap(),
-            new NodeId(namespaceIndex, "StorageSystem/"+folderName),
+            new NodeId(namespaceIndex, "StorageSystem/" + folderName),
             new QualifiedName(namespaceIndex, folderName),
             LocalizedText.english(folderName)
         );
@@ -161,7 +161,7 @@ public class ExampleNamespace implements Namespace {
             Variant variant = (Variant) os[2];
 
             UaVariableNode node = new UaVariableNode.UaVariableNodeBuilder(server.getNodeMap())
-                .setNodeId(new NodeId(namespaceIndex, "StorageSystem/"+folderName+"/" + name))
+                .setNodeId(new NodeId(namespaceIndex, "StorageSystem/" + folderName + "/" + name))
                 .setAccessLevel(ubyte(AccessLevel.getMask(AccessLevel.READ_WRITE)))
                 .setUserAccessLevel(ubyte(AccessLevel.getMask(AccessLevel.READ_WRITE)))
                 .setBrowseName(new QualifiedName(namespaceIndex, name))

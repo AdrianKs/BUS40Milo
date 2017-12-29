@@ -238,7 +238,6 @@ public class TestNamespace implements Namespace {
         {"Float", Identifiers.Float, new Variant(3.14f)},
         {"Guid", Identifiers.Guid, new Variant(UUID.randomUUID())},
         {"Int16", Identifiers.Int16, new Variant((short) 16)},
-        {"Int32", Identifiers.Int32, new Variant(32)},
         {"Int64", Identifiers.Int64, new Variant(64L)},
         {"LocalizedText", Identifiers.LocalizedText, new Variant(LocalizedText.english("localized text"))},
         {"NodeId", Identifiers.NodeId, new Variant(new NodeId(1234, "abcd"))},
