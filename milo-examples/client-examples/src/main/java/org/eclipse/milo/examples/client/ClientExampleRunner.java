@@ -44,17 +44,31 @@ public class ClientExampleRunner {
 
     private final ClientExample clientExample;
 
+    private final String endpointURL;
+
     public ClientExampleRunner(ClientExample clientExample) throws Exception {
         this.clientExample = clientExample;
 
         exampleServer = new ExampleServer();
+
+        this.endpointURL = "opc.tcp://localhost:12686/example";
         //exampleServer.startup().get();
     }
+
+    public ClientExampleRunner(ClientExample clientExample, String endpointURL) throws Exception {
+        this.clientExample = clientExample;
+
+        exampleServer = new ExampleServer();
+        //exampleServer.startup().get();
+        this.endpointURL = endpointURL;
+    }
+
+
 
     private OpcUaClient createClient() throws Exception {
         SecurityPolicy securityPolicy = clientExample.getSecurityPolicy();
 
-        EndpointDescription[] endpoints = UaTcpStackClient.getEndpoints("opc.tcp://134.155.49.90:12686/example").get();
+        EndpointDescription[] endpoints = UaTcpStackClient.getEndpoints(endpointURL).get();
 
         EndpointDescription endpoint = Arrays.stream(endpoints)
             .filter(e -> e.getSecurityPolicyUri().equals(securityPolicy.getSecurityPolicyUri()))

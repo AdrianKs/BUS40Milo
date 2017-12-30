@@ -30,7 +30,7 @@ public class WriteExampleWeight implements ClientExample {
     public static void main(String[] args) throws Exception {
         WriteExampleWeight example = new WriteExampleWeight();
 
-        new ClientExampleRunner(example).run();
+        new ClientExampleRunner(example, "opc.tcp://134.155.49.90:12686/example").run();
     }
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
